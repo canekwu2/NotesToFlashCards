@@ -1,0 +1,45 @@
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+    background-color: beige;
+  }
+  .flashcard {
+      display: flex;
+      width: 400px;
+      height: 300px;
+      background-color: lightblue;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 16px;
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.3s;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .flashcard:hover {
+      transform: scale(1.05);
+    }
+    .question{
+      font-weight: bold;
+      font-size: 40px;
+    }
+    .answer {
+      display: none;
+      font-weight: bold;
+      font-size: 40px;
+    } 
+    
+    .show-answer .question {
+      display: none;
+     
+    }
+    
+    .show-answer .answer {
+      display: block;
+    }
+    

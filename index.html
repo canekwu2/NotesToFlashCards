@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flashcard</title>
+<link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+<div class="flashcard" onclick="this.classList.toggle('show-answer')">
+  <div class="question">What is the capital of France?</div>
+  <div class="answer">Paris</div>
+</div>
+<div class="controls">
+    <button onclick="test()">Next</button>
+    <button>Previous</button>
+  </div>
+
+<!-- Need to include this line if you want to utilize jquery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+   const excelFilePath = 'SQL Flashcards.xlsx';
+   let allData;
+   let count=0
+   fetchData().then(() => {
+        console.log(allData);
+        // Continue with your logic here, such as updating the UI with the fetched data
+    });
+   
+    async function fetchData() {
+    try {
+        const response = await fetch("http://localhost:3001/cardData");
+  
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+  
+        allData = await response.json(); // or response.json() if the content is JSON
+        
+      console.log(allData); // This will log the HTML response, "Hello World!"
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  }
+
+//    $(document).ready(function() {
+//     init()
+//     // $('.question').text(allData[1][0]);
+//     });
+
+//     async function fetchData() {
+//     try {
+//         const response = await fetch("http://localhost:3001/cardData");
+  
+//       if (!response.ok) {
+//         throw new Error(`HTTP error! Status: ${response.status}`);
+//       }
+  
+//         allData = await response.json(); // or response.json() if the content is JSON
+
+        
+//       console.log(allData); // This will log the HTML response, "Hello World!"
+//     } catch (error) {
+//       console.error('Error:', error);
+//     }
+//   }
+//   async function init(){
+//     fetchData()
+//     console.log(allData)
+//   }
+  function test(){
+    const currentCard = allData[count];
+    
+    //Object.keys(currentCard) would return an array with a single element (the key), and [0] is used to access that element. 
+    const questionKey = Object.keys(currentCard)[0]; // Get the key (e.g., "Poor")
+    const answerKey = Object.keys(currentCard)[1];
+
+    const questionValue = currentCard[questionKey];
+    const answerValue = currentCard[answerKey];
+    console.log(questionKey,answerKey)
+    // console.log(currentCard)
+    // console.log(key)
+    // console.log(value)
+    $('.question').text(questionValue);
+    $('.answer').text(answerValue);
+    count++
+  }
+
+
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+</body>
+</html>
